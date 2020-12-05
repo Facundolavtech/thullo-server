@@ -1,3 +1,3 @@
-This is the backend of a trello clon,
+This is the backend of my trello clon,
 
 http://thullo-trelloclon.netlify.app
