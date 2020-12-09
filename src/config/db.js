@@ -5,6 +5,8 @@ require("dotenv").config();
   const db = await mongoose.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
   });
   console.log("DB is connected to: ", db.connection.name);
 })();
