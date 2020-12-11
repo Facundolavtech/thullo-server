@@ -14,6 +14,8 @@ module.exports = function (req, res, next) {
   try {
     const hashToken = jwt.verify(token, process.env.SECRETKEY);
     req.user = hashToken.user;
+    req.username = hashToken.username;
+    req.name = hashToken.name;
     next();
   } catch (error) {
     res.status(401).json({ msg: "Unvalid token" });

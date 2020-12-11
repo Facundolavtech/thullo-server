@@ -3,6 +3,8 @@ const router = express.Router();
 const { check } = require("express-validator");
 const boardController = require("../controllers/boardController");
 const auth = require("../middlewares/auth");
+const changeBoard = require("../middlewares/changeBoard");
+const deleteBoard = require("../middlewares/deleteBoard");
 
 router.get("/", auth, boardController.getBoards);
 
@@ -13,8 +15,8 @@ router.post(
   boardController.createBoard
 );
 
-router.put("/:id", auth, boardController.updateBoard);
+router.put("/:id", auth, changeBoard, boardController.updateBoard);
 
-router.delete("/:id", auth, boardController.deleteBoard);
+router.delete("/:id", auth, deleteBoard, boardController.deleteBoard);
 
 module.exports = router;

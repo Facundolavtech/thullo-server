@@ -4,7 +4,9 @@ const { validationResult } = require("express-validator");
 exports.getBoards = async (req, res) => {
   const id = req.user;
   try {
-    const boards = await Board.aggregate();
+    const boards = await Board.find({
+      "users.id": id,
+    });
     res.status(200).json(boards);
   } catch (error) {
     res.status(500).json({ msg: "An error was ocurred" });
@@ -21,7 +23,23 @@ exports.createBoard = async (req, res) => {
     const board = await new Board(req.body);
 
     //Set board creator
-    board.creator = req.user;
+    board.creator.push({
+      id: req.user,
+      username: req.username,
+      name: req.name,
+    });
+
+    board.admins.push({
+      id: req.user,
+      username: req.username,
+      name: req.name,
+    });
+
+    board.users.push({
+      id: req.user,
+      username: req.username,
+      name: req.name,
+    });
 
     board.save();
 
@@ -35,7 +53,6 @@ exports.updateBoard = async (req, res) => {
   const id = req.params.id;
   try {
     await Board.findByIdAndUpdate(id, req.body);
-
     res.status(200).json({ msg: "Board updated succesfully" });
   } catch (error) {
     res.status(500).json({ msg: "An error was ocurred" });
